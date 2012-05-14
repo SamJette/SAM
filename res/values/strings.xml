@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    <string name="hello">Hello World, SamProjectActivity!</string>
+    <string name="app_name">SamProject</string>
+    <string name="placeholderText">Test Android Clicker</string>
+    <string name="ListTitleText">Selecteer een leerling</string>
+    <string name="searchString">Zoeken</string>
+    <string name="vragenLijstString">Vragen Lijst</string>
+    <string name="vragenSetLijstString">VragenSetLijst</string>
+    <string name="leerlingenLijstString">Leerlingen Lijst</string>
+    <string name="resultatenString">Resultaten Lijst</string>
+    <string name="vraag_edit_vraag">Vraag</string>
+    <string name="vraag_edit_antwoord">Antwoord</string>
+    <string name="vraag_edit_confirm">Bewaren</string>
+    <string name="jouwVraagString">Jouw vraag ?</string>
+        <string name="menu_delete">Delete Vraag</string>
+    
+</resources>

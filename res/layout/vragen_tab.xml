@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayoutTabVragen"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+        <LinearLayout
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+            <ZoomButton
+                android:id="@+id/zoomButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/btn_plus" />
+
+            <EditText
+                android:id="@+id/editTextZoekVraag"
+                android:layout_width="500dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@android:color/white"
+                android:hint="VRAGEN"
+                android:layout_height="wrap_content" >
+
+                <requestFocus />
+            </EditText>
+
+        <Button
+            android:id="@+id/buttonAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Add New" 
+            android:onClick="onClick"/>
+
+    </LinearLayout>
+    
+    <TextView
+        android:id="@+id/textViewTabVragen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/greenColor"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/listViewTabVragen"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+    </ListView>
+
+</LinearLayout>

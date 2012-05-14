@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+            <string-array name="leerlingen_array">
+        <item>Leerling 1</item>
+        <item>Leerling 2</item>
+        <item>Leerling 3</item>
+        <item>Leerling 4</item>
+        <item>Leerling 5</item>
+        <item>Leerling 6</item>
+        <item>Leerling 7</item>
+        <item>Leerling 8</item>
+        <item>Leerling 9</item>
+        <item>Leerling 10</item>
+        <item>Leerling 11</item>
+        <item>Leerling 12</item>
+        <item>Leerling 13</item>
+        <item>Leerling 14</item>
+        <item>Leerling 15</item>
+        <item>Leerling 16</item>
+        <item>Leerling 17</item>
+        <item>Leerling 18</item>
+        <item>Leerling 19</item>
+        <item>Leerling 20</item>
+        <item>Leerling 21</item>
+    </string-array>
+    
+</resources>

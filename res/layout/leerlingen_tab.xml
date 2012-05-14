@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayoutTabLeerlingen"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/idTextView"
+        android:layout_width="614dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:background="@color/whiteColor"
+        android:gravity="center"
+        android:text="http://192.168.0.78:8080"
+        android:textColor="@color/darkBlueColor"
+        android:textSize="32dp" />
+
+    <TextView
+        android:id="@+id/textViewTabLeerlingen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/leerlingenLijstString"
+        android:textColor="@color/greenColor"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/listViewTabLeerlingen"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+    </ListView>
+
+</LinearLayout>

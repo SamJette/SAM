@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayoutTabLeerlingen"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/whiteColor"
+        android:gravity="center"
+        android:text="SETTINGS"
+        android:textColor="@color/darkBlueColor"
+        android:textSize="32dp" />
+
+    <Button
+        android:id="@+id/buttonGegevensWijzigen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:text="Gegevens leerlingen wijzigen" />
+
+    <Button
+        android:id="@+id/buttonGegevensVerzenden"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:text="Gegevens leerlingen verznden" />
+
+</LinearLayout>
