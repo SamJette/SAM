@@ -15,6 +15,13 @@
         android:textColor="@color/darkBlueColor"
         android:textSize="32dp" />
 
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
     <Button
         android:id="@+id/buttonGegevensWijzigen"
         android:layout_width="wrap_content"
@@ -31,6 +38,6 @@
         android:layout_gravity="center"
         android:layout_margin="20dp"
         android:gravity="center"
-        android:text="Gegevens leerlingen verznden" />
+        android:text="Gegevens leerlingen verzenden" />
 
 </LinearLayout>

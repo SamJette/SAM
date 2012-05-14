@@ -23,16 +23,16 @@
         android:textSize="30dp"
         android:textStyle="bold" />
     
-	<ExpandableListView 
+<!--	<ExpandableListView 
 	    android:id="@+id/listViewTabResultaten"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
-	</ExpandableListView>
+	</ExpandableListView>-->
 
-  <!--   <ListView
+    <ListView
         android:id="@+id/listViewTabResultaten"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
-    </ListView> -->
+    </ListView> 
 
 </LinearLayout>
