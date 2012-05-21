@@ -3,6 +3,7 @@ package com.ehb.samproject;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 
 import android.app.Activity;
@@ -15,9 +16,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class LeerlingenTab extends Activity {
+	
+//	private ArrayList<Student> leerlingArray
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.leerlingen_tab);
+		
 		
         String[] leerlingen = getResources().getStringArray(R.array.leerlingen_array);
         ListAdapter adapter = new ArrayAdapter<String>(this, R.layout.list_item, leerlingen);

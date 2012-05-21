@@ -1,6 +1,8 @@
 package com.ehb.samproject;
 
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 
@@ -30,11 +32,14 @@ public class VragenTab extends Activity  {
 		private static final int PUSH_ID=Menu.FIRST +2;
 		private static final int COPY_ID=Menu.FIRST +3;
 
+	     //   ArrayList<Question> questionArray
+        // getQuestion()
 
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vragen_tab);
+       
         
         m_listview = (ListView) findViewById(R.id.listViewTabVragen);
 

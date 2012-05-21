@@ -1,5 +1,7 @@
 package com.ehb.samproject;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -7,6 +9,7 @@ import android.widget.ListView;
 
 public class ResultatenTab extends Activity {
 
+//	private ArrayList<Result> resultArray
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub

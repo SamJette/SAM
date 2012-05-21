@@ -1,5 +1,7 @@
 package com.ehb.samproject;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,7 +9,11 @@ import android.widget.Button;
 
 public class VragenDetails extends Activity {
 	Button saveButton;
-
+	
+//	private ArrayList<Question> questionArray
+//addQuestion()
+	//editQuestion()
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
