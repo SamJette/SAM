@@ -5,17 +5,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/idTextView"
-        android:layout_width="614dp"
-        android:layout_height="70dp"
-        android:layout_gravity="center"
-        android:background="@color/whiteColor"
-        android:gravity="center"
-        android:text="http://192.168.0.78:8080"
-        android:textColor="@color/darkBlueColor"
-        android:textSize="32dp" />
-
+    
     <TextView
         android:id="@+id/textViewTabLeerlingen"
         android:layout_width="wrap_content"
@@ -28,7 +18,7 @@
     <ListView
         android:id="@+id/listViewTabLeerlingen"
         android:layout_width="fill_parent"
-        android:layout_height="489dp" >
+        android:layout_height="wrap_content" >
     </ListView>
 
 </LinearLayout>
