@@ -15,29 +15,33 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class LeerlingenTab extends Activity {
 
 	// All static variables
-	static final String URL = "http://dl.dropbox.com/u/471136/students.xml";
-	// XML node keys
-	static final String KEY_ROW = "row"; // parent node
-	static final String KEY_ID = "ID";
-	static final String KEY_FIRSTNAME = "FIRSTNAME";
-	static final String KEY_NAME = "NAME";
-	static final String KEY_EMAIL = "EMAIL";
-
+	static final String URL = "http://sam.stofke72.cloudbees.net/myoutput/?format=xml";
 	public ArrayList<Student> students;
 	private ListView myListView;
+
+	// dialog onItemClick
+	static final private int STUDENT_DIALOG = 1;
+	private Student aStudent;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -87,8 +91,8 @@ public class LeerlingenTab extends Activity {
 
 			URL url = null;
 			try {
-				url = new URL(
-						"http://sam.stofke72.cloudbees.net/myoutput/?format=xml");
+				url = new URL(URL);
+				// "http://sam.stofke72.cloudbees.net/myoutput/?format=xml");
 			} catch (MalformedURLException el) {
 				el.printStackTrace();
 			}
@@ -127,7 +131,6 @@ public class LeerlingenTab extends Activity {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			// Log.d("demo", "Array of students = " + students);
 
 			return students;
 		}
@@ -144,6 +147,19 @@ public class LeerlingenTab extends Activity {
 
 			if (this.dialog.isShowing())
 				this.dialog.dismiss();
+
+			myListView.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					// Student temp = students.get(arg2);
+
+					aStudent = students.get(arg2);
+					showDialog(STUDENT_DIALOG);
+
+				}
+			}); // myListView.setOnItemClickListener(this);
 
 			/*
 			 * SimpleAdapter mSchedule = new SimpleAdapter (F1Activity.this,
@@ -174,6 +190,40 @@ public class LeerlingenTab extends Activity {
 
 		}
 
+	}
+
+	// dialog onItemClick
+
+	@Override
+	public Dialog onCreateDialog(int id) {
+		switch (id) {
+		case (STUDENT_DIALOG):
+			LayoutInflater li = LayoutInflater.from(this);
+			View quakeDetailsView = li.inflate(R.layout.student_detail, null);
+
+			AlertDialog.Builder quakeDialog = new AlertDialog.Builder(this);
+			quakeDialog.setTitle("Student Time");
+			quakeDialog.setView(quakeDetailsView);
+			return quakeDialog.create();
+		}
+		return null;
+	}
+
+	@Override
+	public void onPrepareDialog(int id, Dialog dialog) {
+		switch (id) {
+		case (STUDENT_DIALOG):
+			String studentText = "Email: " + aStudent.email + "\n"
+					+ "IsOnLine: " + aStudent.isOnLine;
+
+			AlertDialog studentDialog = (AlertDialog) dialog;
+			studentDialog.setTitle(aStudent.name);
+			TextView tv = (TextView) studentDialog
+					.findViewById(R.id.studentDetailsTextViewInDialog);
+			tv.setText(studentText);
+
+			break;
+		}
 	}
 
 }

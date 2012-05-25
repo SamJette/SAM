@@ -21,14 +21,8 @@ public class Student {
 
 	@Override
 	public String toString() {
-		return "Student [ID=" + ID + ", firstName=" + firstName + ", name="
-				+ name + ", password=" + password + ", email=" + email
-				+ ", number=" + number + ", isOnLine=" + isOnLine
-				+ ", classesStudentsID=" + classesStudentsID
-				+ ", schoolYearsID=" + schoolYearsID + ", startDate="
-				+ startDate + ", endDate=" + endDate + ", classesID="
-				+ classesID + ", classText=" + classText + ", teachersID="
-				+ teachersID + "]";
+		return "Student: " + ID + " " + firstName + " " + name + " " + password
+				+ " " + email + " " + number + " is online: " + isOnLine;
 	}
 
 }
