@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -27,9 +28,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 public class LeerlingenTab extends Activity {
@@ -38,6 +38,17 @@ public class LeerlingenTab extends Activity {
 	static final String URL = "http://sam.stofke72.cloudbees.net/myoutput/?format=xml";
 	public ArrayList<Student> students;
 	private ListView myListView;
+
+	// XML node keys
+	static final String KEY_ROW = "row"; // parent node
+	static final String KEY_DATA = "data";
+	static final String KEY_ID = "ID";
+	static final String KEY_FIRSTNAME = "FIRSTNAME";
+	static final String KEY_NAME = "NAME";
+	static final String KEY_EMAIL = "EMAIL";
+	static final String KEY_NUMBER = "NUMBER";
+	static final String KEY_ISONLINE = "ISONLINE";
+	static final String KEY_PASSWORD = "PASSWORD";
 
 	// dialog onItemClick
 	static final private int STUDENT_DIALOG = 1;
@@ -48,33 +59,19 @@ public class LeerlingenTab extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.leerlingen_tab);
 
-		// ArrayList<HashMap<String, String>> menuItems = new
-		// ArrayList<HashMap<String, String>>();
-
-		// Adding menuItems to ListView
-		// ListAdapter adapter = new SimpleAdapter(this, menuItems,
-		// R.layout.list_item, new String[] { KEY_NAME, KEY_FIRSTNAME,
-		// KEY_EMAIL }, new int[] { R.id.name_label,
-		// R.id.firstname_label, R.id.mail_label });
-
-		// ListView studentList = (ListView)
-		// findViewById(R.id.listViewTabLeerlingen);
-		// populateList();
-		// studentList.setAdapter(adapter);
 		getInterventionListing listing = new getInterventionListing();
 		listing.execute();
 
 	}
 
 	private class getInterventionListing extends
-			AsyncTask<Integer, Integer, ArrayList<Student>> {
+			AsyncTask<Integer, Integer, ArrayList<HashMap<String, String>>> {
 
 		private ProgressDialog dialog;
 
 		@Override
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
-			// super.onPreExecute();
 			dialog = ProgressDialog.show(LeerlingenTab.this, "Loading",
 					"Data loading", true, true, new OnCancelListener() {
 						@Override
@@ -86,8 +83,10 @@ public class LeerlingenTab extends Activity {
 		}
 
 		@Override
-		protected ArrayList<Student> doInBackground(Integer... params) {
-			Log.w("demo", "Start doInBackground");
+		protected ArrayList<HashMap<String, String>> doInBackground(
+				Integer... params) {
+			// Log.w("demo", "Start doInBackground");
+			ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
 
 			URL url = null;
 			try {
@@ -123,7 +122,21 @@ public class LeerlingenTab extends Activity {
 					reader.setContentHandler(parser);
 					reader.parse(new InputSource(in));
 					students = parser.students;
-					Log.d("demo", "Students in the getStudents()= " + students);
+					// Log.d("demo", "Students in the getStudents()= " +
+					// students);
+
+					for (int i = 0; i < students.size(); i++) {
+						Student temp = students.get(i);
+						// Log.d("demo", "firstname student = " +
+						// temp.firstName);
+
+						HashMap<String, String> map = new HashMap<String, String>();
+
+						map.put(KEY_FIRSTNAME, temp.firstName);
+						map.put(KEY_NAME, temp.name);
+						map.put(KEY_EMAIL, temp.email);
+						listItem.add(map);
+					}
 
 				}
 			} catch (SAXException e) {
@@ -132,21 +145,25 @@ public class LeerlingenTab extends Activity {
 				e.printStackTrace();
 			}
 
-			return students;
+			return listItem;
 		}
 
 		@Override
-		protected void onPostExecute(ArrayList<Student> result) {
+		protected void onPostExecute(ArrayList<HashMap<String, String>> result) {
 			Log.w("demo", "Start onPostExecute" + result);
-			// super.onPostExecute(result);
-
-			ListAdapter adapter = new ArrayAdapter<Student>(LeerlingenTab.this,
-					android.R.layout.simple_list_item_1, result);
-			myListView = (ListView) findViewById(R.id.listViewTabLeerlingen);
-			myListView.setAdapter(adapter);
 
 			if (this.dialog.isShowing())
 				this.dialog.dismiss();
+
+			// super.onPostExecute(result);
+
+			myListView = (ListView) findViewById(R.id.listViewTabLeerlingen);
+
+			SimpleAdapter adapter = new SimpleAdapter(LeerlingenTab.this,
+					result, R.layout.list_item_student, new String[] {
+							KEY_FIRSTNAME, KEY_NAME }, new int[] {
+							R.id.firstNameTextView, R.id.lastNameTextView });
+			myListView.setAdapter(adapter);
 
 			myListView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -159,34 +176,7 @@ public class LeerlingenTab extends Activity {
 					showDialog(STUDENT_DIALOG);
 
 				}
-			}); // myListView.setOnItemClickListener(this);
-
-			/*
-			 * SimpleAdapter mSchedule = new SimpleAdapter (F1Activity.this,
-			 * listItem, R.layout.listview, new String[] {"img", "titre",
-			 * "description"}, new int[] {R.id.img, R.id.titre,
-			 * R.id.description}); maListViewPerso.setAdapter(mSchedule);
-			 */
-
-			/*
-			 * myListView.setOnItemClickListener(new OnItemClickListener() {
-			 * 
-			 * @Override public void onItemClick(AdapterView<?> arg0, View arg1,
-			 * int arg2, long arg3) { // TODO Auto-generated method stub Student
-			 * temp = students.get(arg2);
-			 * 
-			 * textViewFirstName = (TextView)
-			 * findViewById(R.id.textViewFirstName);
-			 * textViewFirstName.setText(temp.firstname);
-			 * 
-			 * textViewName = (TextView) findViewById(R.id.textViewLastName);
-			 * textViewName.setText(temp.name);
-			 * 
-			 * textNumber = (TextView) findViewById(R.id.textViewAge);
-			 * textNumber.setText(temp.number);
-			 * 
-			 * } }); // myListView.setOnItemClickListener(this);
-			 */
+			});
 
 		}
 
@@ -214,7 +204,8 @@ public class LeerlingenTab extends Activity {
 		switch (id) {
 		case (STUDENT_DIALOG):
 			String studentText = "Email: " + aStudent.email + "\n"
-					+ "IsOnLine: " + aStudent.isOnLine;
+					+ "Password: " + aStudent.password + "\n" + "IsOnLine: "
+					+ aStudent.isOnLine;
 
 			AlertDialog studentDialog = (AlertDialog) dialog;
 			studentDialog.setTitle(aStudent.name);
