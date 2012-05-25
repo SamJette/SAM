@@ -7,7 +7,7 @@ public class Student {
 	public String password;
 	public String email;
 	public String number;
-	public boolean isOnLine;
+	public String isOnLine;
 
 	public String classesStudentsID;
 	public String schoolYearsID;

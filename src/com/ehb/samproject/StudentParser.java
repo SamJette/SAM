@@ -54,6 +54,8 @@ public class StudentParser extends DefaultHandler {
 			tempStudent.password = builder.toString();
 		} else if (localName.equalsIgnoreCase(KEY_ID)) {
 			tempStudent.ID = Integer.parseInt(builder.toString());
+		} else if (localName.equalsIgnoreCase(KEY_ISONLINE)) {
+			tempStudent.isOnLine = builder.toString();
 		}
 
 	}
@@ -91,6 +93,8 @@ public class StudentParser extends DefaultHandler {
 		} else if (localName.toUpperCase().equals(KEY_PASSWORD)) {
 			builder = new StringBuilder();
 		} else if (localName.toUpperCase().equals(KEY_ID)) {
+			builder = new StringBuilder();
+		} else if (localName.toUpperCase().equals(KEY_ISONLINE)) {
 			builder = new StringBuilder();
 		}
 

@@ -49,6 +49,7 @@ public class LeerlingenTab extends Activity {
 	static final String KEY_NUMBER = "NUMBER";
 	static final String KEY_ISONLINE = "ISONLINE";
 	static final String KEY_PASSWORD = "PASSWORD";
+	static final String KEY_IMAGE_ISONLINE = "IMAGE_ISONLINE";
 
 	// dialog onItemClick
 	static final private int STUDENT_DIALOG = 1;
@@ -65,7 +66,7 @@ public class LeerlingenTab extends Activity {
 	}
 
 	private class getInterventionListing extends
-			AsyncTask<Integer, Integer, ArrayList<HashMap<String, String>>> {
+			AsyncTask<Integer, Integer, ArrayList<HashMap<String, Object>>> {
 
 		private ProgressDialog dialog;
 
@@ -83,10 +84,10 @@ public class LeerlingenTab extends Activity {
 		}
 
 		@Override
-		protected ArrayList<HashMap<String, String>> doInBackground(
+		protected ArrayList<HashMap<String, Object>> doInBackground(
 				Integer... params) {
 			// Log.w("demo", "Start doInBackground");
-			ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
+			ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
 
 			URL url = null;
 			try {
@@ -111,7 +112,6 @@ public class LeerlingenTab extends Activity {
 					try {
 						sp = factory.newSAXParser();
 					} catch (ParserConfigurationException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					XMLReader reader = sp.getXMLReader();
@@ -127,14 +127,20 @@ public class LeerlingenTab extends Activity {
 
 					for (int i = 0; i < students.size(); i++) {
 						Student temp = students.get(i);
-						// Log.d("demo", "firstname student = " +
-						// temp.firstName);
 
-						HashMap<String, String> map = new HashMap<String, String>();
+						HashMap<String, Object> map = new HashMap<String, Object>();
 
 						map.put(KEY_FIRSTNAME, temp.firstName);
 						map.put(KEY_NAME, temp.name);
 						map.put(KEY_EMAIL, temp.email);
+						map.put(KEY_ISONLINE, temp.isOnLine);
+
+						// change image if student is online or not
+						Log.d("demo", "is on line= " + temp.isOnLine);
+						if (temp.isOnLine.equalsIgnoreCase("1")) {
+							map.put(KEY_IMAGE_ISONLINE, R.drawable.vert);
+						}
+
 						listItem.add(map);
 					}
 
@@ -149,7 +155,7 @@ public class LeerlingenTab extends Activity {
 		}
 
 		@Override
-		protected void onPostExecute(ArrayList<HashMap<String, String>> result) {
+		protected void onPostExecute(ArrayList<HashMap<String, Object>> result) {
 			Log.w("demo", "Start onPostExecute" + result);
 
 			if (this.dialog.isShowing())
@@ -161,8 +167,9 @@ public class LeerlingenTab extends Activity {
 
 			SimpleAdapter adapter = new SimpleAdapter(LeerlingenTab.this,
 					result, R.layout.list_item_student, new String[] {
-							KEY_FIRSTNAME, KEY_NAME }, new int[] {
-							R.id.firstNameTextView, R.id.lastNameTextView });
+							KEY_FIRSTNAME, KEY_NAME, KEY_IMAGE_ISONLINE },
+					new int[] { R.id.firstNameTextView, R.id.lastNameTextView,
+							R.id.logo });
 			myListView.setAdapter(adapter);
 
 			myListView.setOnItemClickListener(new OnItemClickListener() {
