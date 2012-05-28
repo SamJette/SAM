@@ -25,6 +25,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -55,6 +56,10 @@ public class LeerlingenTab extends Activity {
 	static final private int STUDENT_DIALOG = 1;
 	private Student aStudent;
 
+	// menu to refresh
+	// ! also needed in SamProjectActivity !!
+	static final int MENU_UPDATE = Menu.FIRST;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -63,6 +68,11 @@ public class LeerlingenTab extends Activity {
 		getInterventionListing listing = new getInterventionListing();
 		listing.execute();
 
+	}
+
+	public void refreshStudentList(View v) {
+		getInterventionListing listing = new getInterventionListing();
+		listing.execute();
 	}
 
 	private class getInterventionListing extends

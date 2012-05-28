@@ -5,16 +5,31 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    
-    <TextView
-        android:id="@+id/textViewTabLeerlingen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/leerlingenLijstString"
-        android:textColor="@color/greenColor"
-        android:textSize="30dp"
-        android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
+        <TextView
+            android:id="@+id/textViewTabLeerlingen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/leerlingenLijstString"
+            android:textColor="@color/greenColor"
+            android:textSize="30dp"
+                        android:padding="20dip"
+            
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/refreshButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dip"
+            android:gravity="right"
+            android:onClick="refreshStudentList"
+            android:text="Refresh" />
+
+    </LinearLayout>
     <ListView
         android:id="@+id/listViewTabLeerlingen"
         android:layout_width="fill_parent"
