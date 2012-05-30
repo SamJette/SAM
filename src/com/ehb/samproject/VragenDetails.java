@@ -28,12 +28,12 @@ public class VragenDetails extends Activity implements OnCheckedChangeListener {
 	boolean isMeerKeuzeVraag;
 	boolean isInvulVraag;
 
-	EditText editJa1;
+	EditText editJa1InvulVraag;
 	EditText editNee2;
 	EditText edit3;
 	EditText edit4;
 	EditText edit5;
-	EditText editInvulVraag;
+	// EditText editInvulVraag;
 
 	CheckBox checkJa1;
 	CheckBox checkNee2;
@@ -70,13 +70,13 @@ public class VragenDetails extends Activity implements OnCheckedChangeListener {
 		radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
 		radioGroup.setOnCheckedChangeListener(this);
 
-		editJa1 = (EditText) findViewById(R.id.textViewJa);
+		editJa1InvulVraag = (EditText) findViewById(R.id.textViewJa);
 		editNee2 = (EditText) findViewById(R.id.textViewNee);
 		edit3 = (EditText) findViewById(R.id.textView3);
 		edit4 = (EditText) findViewById(R.id.textView4);
 		edit5 = (EditText) findViewById(R.id.textView5);
 
-		editInvulVraag = (EditText) findViewById(R.id.editInvulVraag);
+		// editInvulVraag = (EditText) findViewById(R.id.editInvulVraag);
 
 		checkJa1 = (CheckBox) findViewById(R.id.checkBoxJa);
 		checkNee2 = (CheckBox) findViewById(R.id.checkBoxNee);
@@ -92,25 +92,14 @@ public class VragenDetails extends Activity implements OnCheckedChangeListener {
 
 		editQuestionText = (EditText) findViewById(R.id.editTextVraag);
 
-		Bundle b = getIntent().getExtras();
-		int index = b.getInt("position");
-
-		Log.d("demo", String.valueOf(index));
-		Question q = new Question();
-		questions.add(index, q);
-
-		Log.d("demo", questions.toString());
-
-		// q = questions.get(index + 1);
-
-		// editQuestionText.setText(q.questionText);
-
-		// editQuestionText.setText(getResources().getString(questions.get(mPosition))));
-
-		// mItem = DataSource.getDataSourceInstance(this).getmItemsData()
-		// .get(mPosition);
-		// editQuestionText.setText(mItem.getmQuote());
-
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			String vragenText = extras.getString(VragenTab.KEY_VRAGENTEXT);
+			Log.d("demo", "Bundel: vragen Text in detail view: " + vragenText);
+			if (vragenText != null) {
+				editQuestionText.setText(vragenText);
+			}
+		}
 	}
 
 	// method for the save question
@@ -146,23 +135,11 @@ public class VragenDetails extends Activity implements OnCheckedChangeListener {
 				aQuestion.answerText = "Nee";
 			}
 
-		} else {
-			Log.d("demo", "is GEEN JaNeeVraag");
-
-		}
-
-		if (isMeerKeuzeVraag) {
+		} else if (isMeerKeuzeVraag) {
 			Log.d("demo", "isMeerKeuzeVraag");
 
-		} else {
-			Log.d("demo", "is GEEN MeerKeuzeVraag");
-
-		}
-		if (isInvulVraag) {
+		} else if (isInvulVraag) {
 			Log.d("demo", "isInvulVraag");
-
-		} else {
-			Log.d("demo", "is GEEN InvulVraag");
 
 		}
 
@@ -200,8 +177,11 @@ public class VragenDetails extends Activity implements OnCheckedChangeListener {
 
 	void setVisibilityFromRadio() {
 		if (isJaNeeVraag) {
-			editJa1.setVisibility(View.VISIBLE);
+			editJa1InvulVraag.setVisibility(View.VISIBLE);
+			editJa1InvulVraag.setText("JA");
+
 			editNee2.setVisibility(View.VISIBLE);
+			editNee2.setText("NEE");
 			checkJa1.setVisibility(View.VISIBLE);
 			checkNee2.setVisibility(View.VISIBLE);
 			buttonJa1.setVisibility(View.VISIBLE);
@@ -217,11 +197,11 @@ public class VragenDetails extends Activity implements OnCheckedChangeListener {
 			button4.setVisibility(View.INVISIBLE);
 			button5.setVisibility(View.INVISIBLE);
 
-			editInvulVraag.setVisibility(View.INVISIBLE);
+			// editInvulVraag.setVisibility(View.INVISIBLE);
 
 		} else if (isMeerKeuzeVraag) {
-			editJa1.setVisibility(View.VISIBLE);
-			editJa1.setText("1");
+			editJa1InvulVraag.setVisibility(View.VISIBLE);
+			editJa1InvulVraag.setText("1");
 			editNee2.setVisibility(View.VISIBLE);
 			editNee2.setText("2");
 			checkJa1.setVisibility(View.VISIBLE);
@@ -240,10 +220,13 @@ public class VragenDetails extends Activity implements OnCheckedChangeListener {
 			button4.setVisibility(View.VISIBLE);
 			button5.setVisibility(View.VISIBLE);
 
-			editInvulVraag.setVisibility(View.INVISIBLE);
+			// editInvulVraag.setVisibility(View.INVISIBLE);
 
 		} else if (isInvulVraag) {
-			editJa1.setVisibility(View.INVISIBLE);
+			editJa1InvulVraag.setVisibility(View.VISIBLE);
+			editJa1InvulVraag.setHint("Enter the answer here");
+			editJa1InvulVraag.setHintTextColor(R.color.whiteColor);
+			editJa1InvulVraag.setText("");
 			editNee2.setVisibility(View.INVISIBLE);
 			checkJa1.setVisibility(View.INVISIBLE);
 			checkNee2.setVisibility(View.INVISIBLE);
@@ -260,7 +243,7 @@ public class VragenDetails extends Activity implements OnCheckedChangeListener {
 			button4.setVisibility(View.INVISIBLE);
 			button5.setVisibility(View.INVISIBLE);
 
-			editInvulVraag.setVisibility(View.VISIBLE);
+			// editInvulVraag.setVisibility(View.VISIBLE);
 
 		}
 	}

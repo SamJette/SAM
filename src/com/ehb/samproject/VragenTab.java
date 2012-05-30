@@ -1,10 +1,12 @@
 package com.ehb.samproject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -12,13 +14,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 public class VragenTab extends Activity implements OnItemClickListener {
+
+	// XML node keys
+	static final String KEY_ROW = "row"; // parent node
+	static final String KEY_DATA = "data";
+	static final String KEY_ID = "ID";
+	static final String KEY_VRAGENTEXT = "VRAGENTEXT";
+	static final String KEY_ANTWOORDTEXT = "ANTWOORDTEXT";
 
 	private static final int ACTIVITY_CREATE = 0;
 	private static final int ACTIVITY_DETAIL = 1;
@@ -41,18 +48,38 @@ public class VragenTab extends Activity implements OnItemClickListener {
 
 		setContentView(R.layout.vragen_tab);
 
+		Question aQuestion1 = new Question();
+		aQuestion1.questionText = "Is een vlinder een vogel ?";
+		aQuestion1.answerText = "Nee";
+
+		Question aQuestion2 = new Question();
+		aQuestion2.questionText = "2 + 2 = ?";
+		aQuestion2.answerText = "4";
+
+		questions.add(aQuestion1);
+		questions.add(aQuestion2);
+
 		m_listview = (ListView) findViewById(R.id.listViewTabVragen);
 
-		String[] items = new String[] { "Is een vlinder een vogel ?",
-				"Vraag 2", "Vraag 3", "Vraag 4" };
+		// ListAdapter adapter = new ArrayAdapter<String>(this,
+		// R.layout.list_item_vragen, items);
 
-		// Adapter for a list with push button
-		// ArrayAdapter<String> adapter =new
-		// ArrayAdapter<String>(this,R.layout.list_item_with_button,
-		// R.id.tvViewRow , items);
+		ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
 
-		ListAdapter adapter = new ArrayAdapter<String>(this,
-				R.layout.list_item, items);
+		for (int i = 0; i < questions.size(); i++) {
+			Question temp = questions.get(i);
+
+			HashMap<String, Object> map = new HashMap<String, Object>();
+
+			map.put(KEY_VRAGENTEXT, temp.questionText);
+			map.put(KEY_ANTWOORDTEXT, temp.answerText);
+			listItem.add(map);
+		}
+
+		SimpleAdapter adapter = new SimpleAdapter(VragenTab.this, listItem,
+				R.layout.list_item_vragen, new String[] { KEY_VRAGENTEXT,
+						KEY_ANTWOORDTEXT }, new int[] {
+						R.id.vragenTextTextView, R.id.antwoordTextTextView });
 
 		m_listview.setAdapter(adapter);
 
@@ -62,7 +89,7 @@ public class VragenTab extends Activity implements OnItemClickListener {
 		// click on an item in the listView
 
 		m_listview.setOnItemClickListener(this);
-		aQuestion = new Question();
+		// aQuestion = new Question();
 
 	}
 
@@ -134,21 +161,12 @@ public class VragenTab extends Activity implements OnItemClickListener {
 	public void onItemClick(AdapterView<?> arg0, View view, int position,
 			long arg3) {
 
-		// test of passing the data is working
-		if (position == 0) {
-			aQuestion.questionText = "Is een vlinder een vogel ?";
-			questions.add(aQuestion);
+		Intent i = new Intent(getApplicationContext(), VragenDetails.class);
+		i.putExtra(KEY_VRAGENTEXT, questions.get(position).questionText);
+		i.putExtra(KEY_ANTWOORDTEXT, questions.get(position).answerText);
 
-		}
-
-		questionText = ((TextView) view).getText().toString();
-
-		Intent i = new Intent(VragenTab.this, VragenDetails.class);
-		i.putExtra("position", position);
+		Log.d("demo", "question text=" + questions.get(position).questionText);
 		startActivity(i);
-
-		// startActivityForResult(i, ACTIVITY_DETAIL);
-
 	}
 
 	// the push button clicker

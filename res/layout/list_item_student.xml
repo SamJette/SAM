@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-   android:layout_width="fill_parent"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/list_selector"
     android:orientation="horizontal" >
-     <ImageView
+
+    <!--   ListRow Left sied Thumbnail image -->
+
+    <LinearLayout
+        android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dip"
+        android:background="@drawable/image_bg"
+        android:padding="3dip" >
+
+        <ImageView
             android:id="@+id/logo"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -12,10 +25,9 @@
             android:layout_marginTop="5dp"
             android:contentDescription="Image if student is online or not"
             android:src="@drawable/orange" />
-    
-    
+    </LinearLayout>
+
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -27,16 +39,16 @@
             android:layout_width="200dp"
             android:layout_height="fill_parent"
             android:text="FirstName TextView"
+            android:textColor="#040404"
             android:textSize="16dp"
             android:textStyle="bold" />
-
 
         <TextView
             android:id="@+id/lastNameTextView"
             android:layout_width="200dp"
             android:layout_height="fill_parent"
-            android:text="LastName TextView" />
+            android:text="LastName TextView"
+            android:textColor="#343434" />
     </LinearLayout>
 
-    
 </LinearLayout>

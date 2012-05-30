@@ -13,27 +13,29 @@
             android:id="@+id/textViewTabVragen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="20dip"
             android:text="Vragen Lijst"
-            android:textColor="@color/greenColor"
+            android:textColor="#040404"
             android:textSize="30dp"
-                        android:padding="20dip"
-            
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/refreshButton"
+            android:id="@+id/addButton"
+            android:background="@drawable/detail_vragen_roundcorner"
+            android:textColor="#FFFFFF"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="20dip"
             android:gravity="right"
-            android:onClick="refreshVragenList"
-            android:text="Refresh" />
-
+            android:onClick="onClick"
+            android:padding="20dip"
+            android:text="Add" />
     </LinearLayout>
+
     <ListView
         android:id="@+id/listViewTabVragen"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:listSelector="@drawable/list_selector" >
     </ListView>
 
 </LinearLayout>
