@@ -1,5 +1,7 @@
 package com.ehb.samproject;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,12 +15,15 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class VragenTab extends Activity {
+public class VragenTab extends Activity implements OnItemClickListener {
 
 	private static final int ACTIVITY_CREATE = 0;
 	private static final int ACTIVITY_DETAIL = 1;
+
+	public String questionText;
 
 	private ListView m_listview;
 	private static final String TAG = "VragenList";
@@ -27,12 +32,13 @@ public class VragenTab extends Activity {
 	private static final int PUSH_ID = Menu.FIRST + 2;
 	private static final int COPY_ID = Menu.FIRST + 3;
 
-	// ArrayList<Question> questionArray
-	// getQuestion()
+	public Question aQuestion;
+	public ArrayList<Question> questions = new ArrayList<Question>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.vragen_tab);
 
 		m_listview = (ListView) findViewById(R.id.listViewTabVragen);
@@ -55,23 +61,9 @@ public class VragenTab extends Activity {
 		m_listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		// click on an item in the listView
 
-		m_listview.setOnItemClickListener(new OnItemClickListener() {
+		m_listview.setOnItemClickListener(this);
+		aQuestion = new Question();
 
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View view,
-					int position, long id) {
-				/*
-				 * Object o = m_listview.getItemAtPosition(position); String
-				 * vraag = o.toString(); Toast.makeText(getApplicationContext(),
-				 * "You have chosen the question: " + " " + vraag,
-				 * Toast.LENGTH_LONG).show();
-				 */
-				Intent i = new Intent(VragenTab.this, VragenDetails.class);
-
-				startActivityForResult(i, ACTIVITY_DETAIL);
-
-			}
-		});
 	}
 
 	// long press to delete, to copy, to push ? ....
@@ -135,6 +127,28 @@ public class VragenTab extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
+	}
+
+	// click on a row from the listview
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View view, int position,
+			long arg3) {
+
+		// test of passing the data is working
+		if (position == 0) {
+			aQuestion.questionText = "Is een vlinder een vogel ?";
+			questions.add(aQuestion);
+
+		}
+
+		questionText = ((TextView) view).getText().toString();
+
+		Intent i = new Intent(VragenTab.this, VragenDetails.class);
+		i.putExtra("position", position);
+		startActivity(i);
+
+		// startActivityForResult(i, ACTIVITY_DETAIL);
+
 	}
 
 	// the push button clicker

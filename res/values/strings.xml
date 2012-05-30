@@ -14,6 +14,7 @@
     <string name="vraag_edit_confirm">Bewaren</string>
     <string name="jouwVraagString">Jouw vraag ?</string>
         <string name="menu_delete">Delete Vraag</string>
+        <string name="menu_refresh">Update van de lijst</string>
         
     
 </resources>

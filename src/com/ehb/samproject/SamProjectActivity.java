@@ -1,8 +1,12 @@
 package com.ehb.samproject;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TabHost;
 
 public class SamProjectActivity extends TabActivity {
@@ -12,6 +16,17 @@ public class SamProjectActivity extends TabActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+
+		ActionBar actionBar = getActionBar();
+
+		// ActionBar actionBar = getActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+		actionBar.setDisplayShowTitleEnabled(true);
+		actionBar.setTitle("Question Time ?");
+		// actionBar.isShowing();
+		// actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		// actionBar.show();
+		// actionBar.setDisplayHomeAsUpEnabled(false);
 
 		TabHost tabHost = getTabHost();
 		TabHost.TabSpec spec;
@@ -48,6 +63,28 @@ public class SamProjectActivity extends TabActivity {
 
 		tabHost.setCurrentTab(0);
 
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// MenuInflater inflater = getMenuInflater();
+		// inflater.inflate(R.menu.menu, menu);
+		menu.add(0, 0, Menu.NONE, "Refresh");
+
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case 0:
+			Activity myCurrentActivity = this.getCurrentActivity();
+			if (LeerlingenTab.class.isInstance(myCurrentActivity) == true) {
+				((LeerlingenTab) myCurrentActivity).refreshStudentList();
+			}
+			return true;
+		}
+		return false;
 	}
 
 }

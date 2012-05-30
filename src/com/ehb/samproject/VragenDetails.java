@@ -92,6 +92,25 @@ public class VragenDetails extends Activity implements OnCheckedChangeListener {
 
 		editQuestionText = (EditText) findViewById(R.id.editTextVraag);
 
+		Bundle b = getIntent().getExtras();
+		int index = b.getInt("position");
+
+		Log.d("demo", String.valueOf(index));
+		Question q = new Question();
+		questions.add(index, q);
+
+		Log.d("demo", questions.toString());
+
+		// q = questions.get(index + 1);
+
+		// editQuestionText.setText(q.questionText);
+
+		// editQuestionText.setText(getResources().getString(questions.get(mPosition))));
+
+		// mItem = DataSource.getDataSourceInstance(this).getmItemsData()
+		// .get(mPosition);
+		// editQuestionText.setText(mItem.getmQuote());
+
 	}
 
 	// method for the save question

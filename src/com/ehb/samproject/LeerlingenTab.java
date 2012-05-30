@@ -25,7 +25,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -38,6 +37,8 @@ public class LeerlingenTab extends Activity {
 	// All static variables
 	static final String URL = "http://sam.stofke72.cloudbees.net/myoutput/?format=xml";
 	public ArrayList<Student> students;
+	public Student aStudent;
+
 	private ListView myListView;
 
 	// XML node keys
@@ -54,16 +55,19 @@ public class LeerlingenTab extends Activity {
 
 	// dialog onItemClick
 	static final private int STUDENT_DIALOG = 1;
-	private Student aStudent;
 
 	// menu to refresh
 	// ! also needed in SamProjectActivity !!
-	static final int MENU_UPDATE = Menu.FIRST;
+	// static final int MENU_UPDATE = Menu.FIRST;
+	private final int ID_MENU_UPDATE = 1;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.leerlingen_tab);
+
+		// ActionBar actionBar = getActionBar();
+		// actionBar.show();
 
 		getInterventionListing listing = new getInterventionListing();
 		listing.execute();
@@ -71,6 +75,11 @@ public class LeerlingenTab extends Activity {
 	}
 
 	public void refreshStudentList(View v) {
+		getInterventionListing listing = new getInterventionListing();
+		listing.execute();
+	}
+
+	public void refreshStudentList() {
 		getInterventionListing listing = new getInterventionListing();
 		listing.execute();
 	}
@@ -149,6 +158,8 @@ public class LeerlingenTab extends Activity {
 						Log.d("demo", "is on line= " + temp.isOnLine);
 						if (temp.isOnLine.equalsIgnoreCase("1")) {
 							map.put(KEY_IMAGE_ISONLINE, R.drawable.vert);
+						} else {
+							map.put(KEY_IMAGE_ISONLINE, R.drawable.orange);
 						}
 
 						listItem.add(map);
