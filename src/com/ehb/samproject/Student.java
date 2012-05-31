@@ -1,5 +1,7 @@
 package com.ehb.samproject;
 
+import java.util.ArrayList;
+
 public class Student {
 	public int ID;
 	public String firstName;
@@ -18,6 +20,14 @@ public class Student {
 	public String classText;
 
 	public String teachersID;
+
+	public int correctResults;
+	public int totalQuestion;
+
+	public String resultText;
+
+	public ArrayList<Answer> answers;
+	public ArrayList<Question> questions;
 
 	@Override
 	public String toString() {

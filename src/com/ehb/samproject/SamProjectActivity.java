@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
@@ -78,6 +79,8 @@ public class SamProjectActivity extends TabActivity {
 		txtTab.setPadding(8, 9, 8, 9);
 		txtTab.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
 		txtTab.setBackgroundResource(R.drawable.list_tab_selector);
+		txtTab.setTypeface(Typeface.DEFAULT_BOLD);
+		txtTab.setTextSize(20);
 		txtTab.setText(myTabTitle);
 		return txtTab;
 

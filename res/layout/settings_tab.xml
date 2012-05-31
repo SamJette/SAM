@@ -3,24 +3,26 @@
     android:id="@+id/linearLayoutTabLeerlingen"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/gradient_bg"
     android:orientation="vertical" >
 
     <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@color/whiteColor"
-        android:gravity="center"
-        android:text="SETTINGS"
-        android:textColor="@color/darkBlueColor"
-        android:textSize="32dp" />
-
-    <TextView
-        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:text="Settings"
+        android:textColor="#040404"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+       <Button
+        android:id="@+id/buttonLeerkracht"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:background="@drawable/detail_vragen_roundcorner"
+        android:gravity="center"
+        android:text="Login - password" />
+    
 
     <Button
         android:id="@+id/buttonGegevensWijzigen"
@@ -28,6 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="20dp"
+        android:background="@drawable/detail_vragen_roundcorner"
         android:gravity="center"
         android:text="Gegevens leerlingen wijzigen" />
 
@@ -37,6 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="20dp"
+        android:background="@drawable/detail_vragen_roundcorner"
         android:gravity="center"
         android:text="Gegevens leerlingen verzenden" />
 
