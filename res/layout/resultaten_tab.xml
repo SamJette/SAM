@@ -8,10 +8,10 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/whiteColor"
+        android:background="@drawable/detail_vragen_roundcorner"
         android:gravity="center"
         android:layout_gravity="center"
-        android:textColor="@color/darkBlueColor"
+        android:textColor="@color/whiteColor"
         android:textSize="32dp"
         android:text="... de vraag ..." />
     
@@ -19,20 +19,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Resultaten Lijst"
-        android:textColor="@color/greenColor"
+            android:textColor="#040404"
         android:textSize="30dp"
         android:textStyle="bold" />
     
-<!--	<ExpandableListView 
+	<ExpandableListView 
 	    android:id="@+id/listViewTabResultaten"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
-	</ExpandableListView>-->
+	</ExpandableListView>
 
-    <ListView
+  <!--   <ListView
         android:id="@+id/listViewTabResultaten"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
-    </ListView> 
+    </ListView>  -->
 
 </LinearLayout>

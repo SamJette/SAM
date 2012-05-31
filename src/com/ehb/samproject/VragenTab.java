@@ -138,11 +138,12 @@ public class VragenTab extends Activity implements OnItemClickListener {
 
 	// onClick - button "Add Question"
 	public void onClick(View v) {
-		// Toast.makeText(getApplicationContext(), "Add question",
-		// Toast.LENGTH_LONG).show();
-		Intent i = new Intent(VragenTab.this, VragenDetails.class);
+		// Intent i = new Intent(VragenTab.this, VragenDetails.class);
 
-		startActivityForResult(i, ACTIVITY_DETAIL);
+		// startActivityForResult(i, ACTIVITY_DETAIL);
+		Intent intent = new Intent(getParent(), VragenDetails.class);
+		TabGroupActivity parentactivity = (TabGroupActivity) getParent();
+		parentactivity.startChildActivity("VragenDetails", intent);
 
 	}
 
@@ -161,12 +162,17 @@ public class VragenTab extends Activity implements OnItemClickListener {
 	public void onItemClick(AdapterView<?> arg0, View view, int position,
 			long arg3) {
 
-		Intent i = new Intent(getApplicationContext(), VragenDetails.class);
-		i.putExtra(KEY_VRAGENTEXT, questions.get(position).questionText);
-		i.putExtra(KEY_ANTWOORDTEXT, questions.get(position).answerText);
+		Intent intent = new Intent(getParent(), VragenDetails.class);
+
+		// Intent i = new Intent(getApplicationContext(), VragenDetails.class);
+		intent.putExtra(KEY_VRAGENTEXT, questions.get(position).questionText);
+		intent.putExtra(KEY_ANTWOORDTEXT, questions.get(position).answerText);
 
 		Log.d("demo", "question text=" + questions.get(position).questionText);
-		startActivity(i);
+		TabGroupActivity parentactivity = (TabGroupActivity) getParent();
+		parentactivity.startChildActivity("VragenDetails", intent);
+
+		// startActivity(i);
 	}
 
 	// the push button clicker

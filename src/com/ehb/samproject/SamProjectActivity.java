@@ -48,7 +48,7 @@ public class SamProjectActivity extends TabActivity {
 				.setIndicator(myTabTextView("Leerlingen")).setContent(intent);
 		tabHost.addTab(spec);
 
-		intent = new Intent().setClass(this, VragenTab.class);
+		intent = new Intent().setClass(this, TabGroup1Activity.class);
 		spec = tabHost.newTabSpec("Vragen")
 				.setIndicator(myTabTextView("Vragen")).setContent(intent);
 		tabHost.addTab(spec);

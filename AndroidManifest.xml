@@ -18,6 +18,8 @@
         <activity android:name="SettingsTab"/>
         <activity android:name="VragenTab"/>
         <activity android:name="VragenDetails"></activity>
+        <activity android:name="TabGroup1Activity"></activity>
+        <activity android:name="TabGroupActivity"></activity>
         
         
     </application>

@@ -3,6 +3,7 @@ package com.ehb.samproject;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -142,6 +143,11 @@ public class VragenDetails extends Activity implements OnCheckedChangeListener {
 			Log.d("demo", "isInvulVraag");
 
 		}
+
+		// return to VragnTab view
+		Intent intent = new Intent(getParent(), VragenTab.class);
+		TabGroupActivity parentactivity = (TabGroupActivity) getParent();
+		parentactivity.startChildActivity("VragenTab", intent);
 
 	}
 
