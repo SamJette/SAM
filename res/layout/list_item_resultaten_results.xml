@@ -7,17 +7,16 @@
 
     <TextView
         android:id="@+id/questionTextView"
-        android:layout_width="772dp"
-        android:layout_height="fill_parent"
+        android:layout_width="364dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_weight="2"
         android:background="@drawable/detail_vragen_roundcorner"
         android:gravity="center"
         android:padding="10dip"
         android:text="Vraag: bv. is een vlinder een vogel ?"
         android:textColor="@color/whiteColor"
         android:textSize="16dp"
-                    android:layout_weight="1"
-        
         android:textStyle="bold" />
 
   <!--   <LinearLayout
@@ -29,8 +28,8 @@
         <TextView
             android:id="@+id/dateAnswerTextView"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_weight="0.76"
             android:gravity="center"
             android:padding="10dip"
             android:text="01/06/2012"
@@ -38,9 +37,8 @@
 
         <TextView
             android:id="@+id/answerTextTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="10dip"
             android:text="nee"

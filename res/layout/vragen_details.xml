@@ -249,17 +249,37 @@
         </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/buttonBewaren"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="20dp"
-        android:background="#696969"
         android:gravity="center"
-        android:onClick="saveTheQuestionOnCLick"
-        android:padding="20dp"
-        android:text="BEWAREN"
-        android:textSize="30dp" />
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/buttonBewaren"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:background="#696969"
+            android:gravity="center"
+            android:onClick="saveTheQuestionOnCLick"
+            android:padding="20dp"
+            android:text="BEWAREN"
+            android:textSize="30dp" />
+
+        <Button
+            android:id="@+id/buttonCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:background="#696969"
+            android:gravity="center"
+            android:onClick="cancelTheQuestionOnCLick"
+            android:padding="20dp"
+            android:text="CANCEL"
+            android:textSize="30dp" />
+    </LinearLayout>
 
 </LinearLayout>

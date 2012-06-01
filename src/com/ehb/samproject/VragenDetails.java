@@ -151,6 +151,14 @@ public class VragenDetails extends Activity implements OnCheckedChangeListener {
 
 	}
 
+	public void cancelTheQuestionOnCLick(View v) {
+		// return to VragnTab view
+		Intent intent = new Intent(getParent(), VragenTab.class);
+		TabGroupActivity parentactivity = (TabGroupActivity) getParent();
+		parentactivity.startChildActivity("VragenTab", intent);
+
+	}
+
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
 
