@@ -2,10 +2,7 @@ package com.ehb.samproject;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.app.TabActivity;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -16,9 +13,7 @@ import android.view.MenuItem;
 import android.widget.TabHost;
 import android.widget.TextView;
 
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.PersistentCookieStore;
-import com.loopj.android.http.RequestParams;
 
 public class SamProjectActivity extends TabActivity {
 	/** Called when the activity is first created. */
@@ -31,42 +26,31 @@ public class SamProjectActivity extends TabActivity {
 		PersistentCookieStore myCookieStore = new PersistentCookieStore(this);
 		RestClient.client.setCookieStore(myCookieStore);
 
-//		Login();
-
-		// ActionBar actionBar = getActionBar();
-
 		ActionBar actionBar = getActionBar();
-		// actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-		// actionBar.setDisplayShowTitleEnabled(true);
 		actionBar.setTitle("Question Time ?");
-		// actionBar.isShowing();
-		// actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-		// actionBar.show();
-		// actionBar.setDisplayHomeAsUpEnabled(false);
-
-		/*
-		 * TextView txtTab1 = new TextView(this); txtTab1.setTextColor(Color.BLACK); txtTab1.setText("Leerlingen"); txtTab1.setPadding(8, 9, 8, 9); txtTab1.setGravity(Gravity.CENTER_HORIZONTAL |
-		 * Gravity.CENTER_VERTICAL); txtTab1.setBackgroundResource(R.drawable.list_tab_selector);
-		 */
 
 		TabHost tabHost = getTabHost();
 		TabHost.TabSpec spec;
 		Intent intent;
 		intent = new Intent().setClass(this, LeerlingenTab.class);
-		spec = tabHost.newTabSpec("Leerlingen").setIndicator(myTabTextView("Leerlingen")).setContent(intent);
+		spec = tabHost.newTabSpec("Leerlingen")
+				.setIndicator(myTabTextView("Leerlingen")).setContent(intent);
 		tabHost.addTab(spec);
 
 		intent = new Intent().setClass(this, TabGroup1Activity.class);
-		spec = tabHost.newTabSpec("Vragen").setIndicator(myTabTextView("Vragen")).setContent(intent);
+		spec = tabHost.newTabSpec("Vragen")
+				.setIndicator(myTabTextView("Vragen")).setContent(intent);
 		tabHost.addTab(spec);
 
 		intent = new Intent().setClass(this, ResultatenTab.class);
-		spec = tabHost.newTabSpec("Resultaten").setIndicator(myTabTextView("Resultaten")).setContent(intent);
+		spec = tabHost.newTabSpec("Resultaten")
+				.setIndicator(myTabTextView("Resultaten")).setContent(intent);
 
 		tabHost.addTab(spec);
 
 		intent = new Intent().setClass(this, SettingsTab.class);
-		spec = tabHost.newTabSpec("Settings").setIndicator(myTabTextView("Settings")).setContent(intent);
+		spec = tabHost.newTabSpec("Settings")
+				.setIndicator(myTabTextView("Settings")).setContent(intent);
 		tabHost.addTab(spec);
 
 		// tabHost.getTabWidget().getChildAt(0).setBackgroundColor(Color.parseColor("#8E1208"));
@@ -102,45 +86,38 @@ public class SamProjectActivity extends TabActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-			case 0:
-				Activity myCurrentActivity = this.getCurrentActivity();
-				if (LeerlingenTab.class.isInstance(myCurrentActivity) == true) {
-					((LeerlingenTab) myCurrentActivity).refreshStudentList();
-				}
-				return true;
+		case 0:
+			Activity myCurrentActivity = this.getCurrentActivity();
+			if (LeerlingenTab.class.isInstance(myCurrentActivity) == true) {
+				((LeerlingenTab) myCurrentActivity).refreshStudentList();
+			}
+			return true;
 		}
 		return false;
 	}
 
-	/*public void Login() {
-
-		RequestParams params = new RequestParams();
-
-		params.put("teacher[email]", "kristof.polleunis@gmail.com");
-		params.put("teacher[password]", "123");
-		params.put("teacher[classid]", "1");
-		
-		RestClient.post("", params, new AsyncHttpResponseHandler() {
-			private ProgressDialog	dialog;
-
-			@Override
-			public void onStart() {
-				dialog = ProgressDialog.show(SamProjectActivity.this, "Loading", "Data loading", true, true, new OnCancelListener() {
-					public void onCancel(DialogInterface dialog) {
-						dialog.dismiss();
-						// cancel(true);
-					}
-				});
-			}
-
-			@Override
-			public void onSuccess(String response) {
-				if (this.dialog.isShowing())
-					this.dialog.dismiss();
-				System.out.println(response);
-			}
-		});
-
-	}*/
+	/*
+	 * public void Login() {
+	 * 
+	 * RequestParams params = new RequestParams();
+	 * 
+	 * params.put("teacher[email]", "kristof.polleunis@gmail.com");
+	 * params.put("teacher[password]", "123"); params.put("teacher[classid]",
+	 * "1");
+	 * 
+	 * RestClient.post("", params, new AsyncHttpResponseHandler() { private
+	 * ProgressDialog dialog;
+	 * 
+	 * @Override public void onStart() { dialog =
+	 * ProgressDialog.show(SamProjectActivity.this, "Loading", "Data loading",
+	 * true, true, new OnCancelListener() { public void onCancel(DialogInterface
+	 * dialog) { dialog.dismiss(); // cancel(true); } }); }
+	 * 
+	 * @Override public void onSuccess(String response) { if
+	 * (this.dialog.isShowing()) this.dialog.dismiss();
+	 * System.out.println(response); } });
+	 * 
+	 * }
+	 */
 
 }
