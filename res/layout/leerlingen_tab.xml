@@ -19,16 +19,16 @@
             android:textSize="30dp"
             android:textStyle="bold" />
 
-        <!--
-             <Button
+        
+          <!--   <Button
             android:id="@+id/refreshButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="20dip"
             android:gravity="right"
             android:onClick="refreshStudentList"
-            android:text="Refresh" />
-        -->
+            android:text="Refresh" />-->
+        
 
     </LinearLayout>
 

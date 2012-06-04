@@ -1,9 +1,6 @@
 package com.ehb.samproject;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,7 +8,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
@@ -21,7 +17,6 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,10 +27,12 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
 public class LeerlingenTab extends Activity {
 
 	// All static variables
-	static final String URL = "http://sam.stofke72.cloudbees.net/myoutput/?format=xml";
+	static final String URL = "http://questiontime.jelastic.dogado.eu/rest/students.xml";
 	public ArrayList<Student> students;
 	public Student aStudent;
 
@@ -66,148 +63,122 @@ public class LeerlingenTab extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.leerlingen_tab);
 
-		// ActionBar actionBar = getActionBar();
-		// actionBar.show();
+		studentListing();
 
-		getInterventionListing listing = new getInterventionListing();
-		listing.execute();
-
-	}
-
-	public void refreshStudentList(View v) {
-		getInterventionListing listing = new getInterventionListing();
-		listing.execute();
 	}
 
 	public void refreshStudentList() {
-		getInterventionListing listing = new getInterventionListing();
-		listing.execute();
+		studentListing();
 	}
 
-	private class getInterventionListing extends
-			AsyncTask<Integer, Integer, ArrayList<HashMap<String, Object>>> {
+	public void studentListing() {
 
-		private ProgressDialog dialog;
+		RestClient.get("students.xml", null, new AsyncHttpResponseHandler() {
+			private ProgressDialog dialog;
 
-		@Override
-		protected void onPreExecute() {
-			// TODO Auto-generated method stub
-			dialog = ProgressDialog.show(LeerlingenTab.this, "Loading",
-					"Data loading", true, true, new OnCancelListener() {
-						@Override
-						public void onCancel(DialogInterface dialog) {
-							dialog.dismiss();
-							cancel(true);
-						}
-					});
-		}
-
-		@Override
-		protected ArrayList<HashMap<String, Object>> doInBackground(
-				Integer... params) {
-			// Log.w("demo", "Start doInBackground");
-			ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
-
-			URL url = null;
-			try {
-				url = new URL(URL);
-				// "http://sam.stofke72.cloudbees.net/myoutput/?format=xml");
-			} catch (MalformedURLException el) {
-				el.printStackTrace();
-			}
-			// create an instance of our parser
-			StudentParser parser = new StudentParser();
-
-			try {
-				// InputStream in =
-				// getResources().openRawResource(R.raw.students);
-
-				InputStream in = url.openStream();
-				if (in == null)
-					Log.e("erreur android", "null");
-				else {
-					SAXParserFactory factory = SAXParserFactory.newInstance();
-					SAXParser sp = null;
-					try {
-						sp = factory.newSAXParser();
-					} catch (ParserConfigurationException e) {
-						e.printStackTrace();
-					}
-					XMLReader reader = sp.getXMLReader();
-
-					// add our own parser to the xml reader and start parsing
-					// the
-					// file
-					reader.setContentHandler(parser);
-					reader.parse(new InputSource(in));
-					students = parser.students;
-					// Log.d("demo", "Students in the getStudents()= " +
-					// students);
-
-					for (int i = 0; i < students.size(); i++) {
-						Student temp = students.get(i);
-
-						HashMap<String, Object> map = new HashMap<String, Object>();
-
-						map.put(KEY_FIRSTNAME, temp.firstName);
-						map.put(KEY_NAME, temp.name);
-						map.put(KEY_EMAIL, temp.email);
-						map.put(KEY_ISONLINE, temp.isOnLine);
-
-						// change image if student is online or not
-						Log.d("demo", "is on line= " + temp.isOnLine);
-						if (temp.isOnLine.equalsIgnoreCase("1")) {
-							map.put(KEY_IMAGE_ISONLINE, R.drawable.vert);
-						} else {
-							map.put(KEY_IMAGE_ISONLINE, R.drawable.orange);
-						}
-
-						listItem.add(map);
-					}
-
-				}
-			} catch (SAXException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+			@Override
+			public void onStart() {
+				dialog = ProgressDialog.show(LeerlingenTab.this, "Loading",
+						"Data loading", true, true, new OnCancelListener() {
+							@Override
+							public void onCancel(DialogInterface dialog) {
+								dialog.dismiss();
+							}
+						});
 			}
 
-			return listItem;
-		}
+			@Override
+			public void onSuccess(String response) {
+				if (this.dialog.isShowing())
+					this.dialog.dismiss();
 
-		@Override
-		protected void onPostExecute(ArrayList<HashMap<String, Object>> result) {
-			Log.w("demo", "Start onPostExecute" + result);
+				ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
 
-			if (this.dialog.isShowing())
-				this.dialog.dismiss();
+				// create an instance of our parser
+				StudentParser parser = new StudentParser();
 
-			// super.onPostExecute(result);
-
-			myListView = (ListView) findViewById(R.id.listViewTabLeerlingen);
-
-			SimpleAdapter adapter = new SimpleAdapter(LeerlingenTab.this,
-					result, R.layout.list_item_student, new String[] {
-							KEY_FIRSTNAME, KEY_NAME, KEY_IMAGE_ISONLINE },
-					new int[] { R.id.firstNameTextView, R.id.lastNameTextView,
-							R.id.logo });
-			myListView.setAdapter(adapter);
-
-			myListView.setOnItemClickListener(new OnItemClickListener() {
-
-				@Override
-				public void onItemClick(AdapterView<?> arg0, View arg1,
-						int arg2, long arg3) {
-					// Student temp = students.get(arg2);
-
-					aStudent = students.get(arg2);
-					showDialog(STUDENT_DIALOG);
-
+				SAXParserFactory factory = SAXParserFactory.newInstance();
+				SAXParser sp = null;
+				try {
+					sp = factory.newSAXParser();
+				} catch (ParserConfigurationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SAXException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-			});
 
-		}
+				XMLReader reader = null;
+				try {
+					reader = sp.getXMLReader();
+				} catch (SAXException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
+				// add our own parser to the xml reader and start parsing
+				// the
+				// file
+				reader.setContentHandler(parser);
+				try {
+					reader.parse(response);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SAXException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				students = parser.students;
+				// Log.d("demo", "Students in the getStudents()= " +
+				// students);
+
+				for (int i = 0; i < students.size(); i++) {
+					Student temp = students.get(i);
+
+					HashMap<String, Object> map = new HashMap<String, Object>();
+
+					map.put(KEY_FIRSTNAME, temp.firstName);
+					map.put(KEY_NAME, temp.name);
+					map.put(KEY_EMAIL, temp.email);
+					map.put(KEY_ISONLINE, temp.isOnLine);
+
+					// change image if student is online or not
+					Log.d("demo", "is on line= " + temp.isOnLine);
+					if (temp.isOnLine.equalsIgnoreCase("1")) {
+						map.put(KEY_IMAGE_ISONLINE, R.drawable.vert);
+					} else {
+						map.put(KEY_IMAGE_ISONLINE, R.drawable.orange);
+					}
+
+					listItem.add(map);
+				}
+
+				myListView = (ListView) findViewById(R.id.listViewTabLeerlingen);
+
+				SimpleAdapter adapter = new SimpleAdapter(LeerlingenTab.this,
+						listItem, R.layout.list_item_student, new String[] {
+								KEY_FIRSTNAME, KEY_NAME, KEY_IMAGE_ISONLINE },
+						new int[] { R.id.firstNameTextView,
+								R.id.lastNameTextView, R.id.logo });
+				myListView.setAdapter(adapter);
+
+				myListView.setOnItemClickListener(new OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> arg0, View arg1,
+							int arg2, long arg3) {
+						// Student temp = students.get(arg2);
+
+						aStudent = students.get(arg2);
+						showDialog(STUDENT_DIALOG);
+
+					}
+				});
+
+			}
+		});
 	}
 
 	// dialog onItemClick

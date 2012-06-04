@@ -2,7 +2,10 @@ package com.ehb.samproject;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.app.TabActivity;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -13,6 +16,9 @@ import android.view.MenuItem;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
 public class SamProjectActivity extends TabActivity {
 	/** Called when the activity is first created. */
 
@@ -20,6 +26,8 @@ public class SamProjectActivity extends TabActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+
+		Login();
 
 		// ActionBar actionBar = getActionBar();
 
@@ -106,6 +114,39 @@ public class SamProjectActivity extends TabActivity {
 			return true;
 		}
 		return false;
+	}
+
+	public void Login() {
+
+		RequestParams params = new RequestParams();
+
+		params.put("teacher[email]", "kristof.polleunis@gmail.com");
+		params.put("teacher[password]", "123");
+
+		RestClient.post("", params, new AsyncHttpResponseHandler() {
+			private ProgressDialog dialog;
+
+			@Override
+			public void onStart() {
+				dialog = ProgressDialog.show(SamProjectActivity.this,
+						"Loading", "Data loading", true, true,
+						new OnCancelListener() {
+							@Override
+							public void onCancel(DialogInterface dialog) {
+								dialog.dismiss();
+								// cancel(true);
+							}
+						});
+			}
+
+			@Override
+			public void onSuccess(String response) {
+				if (this.dialog.isShowing())
+					this.dialog.dismiss();
+				System.out.println(response);
+			}
+		});
+
 	}
 
 }
