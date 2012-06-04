@@ -8,6 +8,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
@@ -18,7 +19,9 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,36 +29,40 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 public class LeerlingenTab extends Activity {
 
 	// All static variables
-	public ArrayList<Student>	students;
-	public Student				aStudent;
+	public ArrayList<Student> students;
+	public Student aStudent;
 
-	private ListView			myListView;
+	private ListView myListView;
 
 	// XML node keys
-	static final String			KEY_ROW				= "row";			// parent node
-	static final String			KEY_DATA			= "data";
-	static final String			KEY_ID				= "ID";
-	static final String			KEY_FIRSTNAME		= "FIRSTNAME";
-	static final String			KEY_NAME			= "NAME";
-	static final String			KEY_EMAIL			= "EMAIL";
-	static final String			KEY_NUMBER			= "NUMBER";
-	static final String			KEY_ISONLINE		= "ISONLINE";
-	static final String			KEY_PASSWORD		= "PASSWORD";
-	static final String			KEY_IMAGE_ISONLINE	= "IMAGE_ISONLINE";
+	static final String KEY_ROW = "row"; // parent node
+	static final String KEY_DATA = "data";
+	static final String KEY_ID = "ID";
+	static final String KEY_FIRSTNAME = "FIRSTNAME";
+	static final String KEY_NAME = "NAME";
+	static final String KEY_EMAIL = "EMAIL";
+	static final String KEY_NUMBER = "NUMBER";
+	static final String KEY_ISONLINE = "ISONLINE";
+	static final String KEY_PASSWORD = "PASSWORD";
+	static final String KEY_IMAGE_ISONLINE = "IMAGE_ISONLINE";
 
 	// dialog onItemClick
-	static final private int	STUDENT_DIALOG		= 1;
+	static final private int STUDENT_DIALOG = 1;
 
 	// menu to refresh
 	// ! also needed in SamProjectActivity !!
 	// static final int MENU_UPDATE = Menu.FIRST;
-	private final int			ID_MENU_UPDATE		= 1;
+	private final int ID_MENU_UPDATE = 1;
+
+/*	private Handler mHandler;
+	private Runnable mRunnable;*/
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +70,24 @@ public class LeerlingenTab extends Activity {
 		setContentView(R.layout.leerlingen_tab);
 
 		studentListing();
+
+/*		mHandler = new Handler();
+		AutoRefresh();
+*/		
 	}
+
+/*	private void AutoRefresh() {
+		mHandler.postDelayed(mRunnable = new Runnable() {
+
+			@Override
+			public void run() {
+				refreshStudentList(); // this is where you put your refresh code
+
+				AutoRefresh();
+
+			}
+		}, 3000);
+	}*/
 
 	public void refreshStudentList(View v) {
 		studentListing();
@@ -75,15 +99,16 @@ public class LeerlingenTab extends Activity {
 
 	public void studentListing() {
 		RestClient.get("students.xml", null, new AsyncHttpResponseHandler() {
-			private ProgressDialog	dialog;
+			private ProgressDialog dialog;
 
 			@Override
 			public void onStart() {
-				dialog = ProgressDialog.show(LeerlingenTab.this, "Loading", "Data loading", true, true, new OnCancelListener() {
-					public void onCancel(DialogInterface dialog) {
-						dialog.dismiss();
-					}
-				});
+				dialog = ProgressDialog.show(LeerlingenTab.this, "Loading",
+						"Data loading", true, true, new OnCancelListener() {
+							public void onCancel(DialogInterface dialog) {
+								dialog.dismiss();
+							}
+						});
 			}
 
 			@Override
@@ -121,10 +146,7 @@ public class LeerlingenTab extends Activity {
 				// file
 				reader.setContentHandler(parser);
 				try {
-					reader.parse(response);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Xml.parse(response, parser);
 				} catch (SAXException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -156,13 +178,17 @@ public class LeerlingenTab extends Activity {
 
 				myListView = (ListView) findViewById(R.id.listViewTabLeerlingen);
 
-				SimpleAdapter adapter = new SimpleAdapter(LeerlingenTab.this, listItem, R.layout.list_item_student, new String[] { KEY_FIRSTNAME, KEY_NAME,
-						KEY_IMAGE_ISONLINE }, new int[] { R.id.firstNameTextView, R.id.lastNameTextView, R.id.logo });
+				SimpleAdapter adapter = new SimpleAdapter(LeerlingenTab.this,
+						listItem, R.layout.list_item_student, new String[] {
+								KEY_FIRSTNAME, KEY_NAME, KEY_IMAGE_ISONLINE },
+						new int[] { R.id.firstNameTextView,
+								R.id.lastNameTextView, R.id.logo });
 				myListView.setAdapter(adapter);
 
 				myListView.setOnItemClickListener(new OnItemClickListener() {
 
-					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+					public void onItemClick(AdapterView<?> arg0, View arg1,
+							int arg2, long arg3) {
 						// Student temp = students.get(arg2);
 
 						aStudent = students.get(arg2);
@@ -181,14 +207,14 @@ public class LeerlingenTab extends Activity {
 	@Override
 	public Dialog onCreateDialog(int id) {
 		switch (id) {
-			case (STUDENT_DIALOG):
-				LayoutInflater li = LayoutInflater.from(this);
-				View quakeDetailsView = li.inflate(R.layout.student_detail, null);
+		case (STUDENT_DIALOG):
+			LayoutInflater li = LayoutInflater.from(this);
+			View quakeDetailsView = li.inflate(R.layout.student_detail, null);
 
-				AlertDialog.Builder quakeDialog = new AlertDialog.Builder(this);
-				quakeDialog.setTitle("Student Time");
-				quakeDialog.setView(quakeDetailsView);
-				return quakeDialog.create();
+			AlertDialog.Builder quakeDialog = new AlertDialog.Builder(this);
+			quakeDialog.setTitle("Student Time");
+			quakeDialog.setView(quakeDetailsView);
+			return quakeDialog.create();
 		}
 		return null;
 	}
@@ -196,15 +222,18 @@ public class LeerlingenTab extends Activity {
 	@Override
 	public void onPrepareDialog(int id, Dialog dialog) {
 		switch (id) {
-			case (STUDENT_DIALOG):
-				String studentText = "Email: " + aStudent.email + "\n" + "Password: " + aStudent.password + "\n" + "IsOnLine: " + aStudent.isOnLine;
+		case (STUDENT_DIALOG):
+			String studentText = "Email: " + aStudent.email + "\n"
+					+ "Password: " + aStudent.password + "\n" + "IsOnLine: "
+					+ aStudent.isOnLine;
 
-				AlertDialog studentDialog = (AlertDialog) dialog;
-				studentDialog.setTitle(aStudent.name);
-				TextView tv = (TextView) studentDialog.findViewById(R.id.studentDetailsTextViewInDialog);
-				tv.setText(studentText);
+			AlertDialog studentDialog = (AlertDialog) dialog;
+			studentDialog.setTitle(aStudent.name);
+			TextView tv = (TextView) studentDialog
+					.findViewById(R.id.studentDetailsTextViewInDialog);
+			tv.setText(studentText);
 
-				break;
+			break;
 		}
 	}
 

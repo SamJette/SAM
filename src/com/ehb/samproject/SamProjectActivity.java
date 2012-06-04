@@ -31,7 +31,7 @@ public class SamProjectActivity extends TabActivity {
 		PersistentCookieStore myCookieStore = new PersistentCookieStore(this);
 		RestClient.client.setCookieStore(myCookieStore);
 
-		Login();
+//		Login();
 
 		// ActionBar actionBar = getActionBar();
 
@@ -112,13 +112,14 @@ public class SamProjectActivity extends TabActivity {
 		return false;
 	}
 
-	public void Login() {
+	/*public void Login() {
 
 		RequestParams params = new RequestParams();
 
 		params.put("teacher[email]", "kristof.polleunis@gmail.com");
 		params.put("teacher[password]", "123");
-
+		params.put("teacher[classid]", "1");
+		
 		RestClient.post("", params, new AsyncHttpResponseHandler() {
 			private ProgressDialog	dialog;
 
@@ -140,6 +141,6 @@ public class SamProjectActivity extends TabActivity {
 			}
 		});
 
-	}
+	}*/
 
 }
