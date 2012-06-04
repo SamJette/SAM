@@ -18,7 +18,9 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,13 +28,19 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 public class LeerlingenTab extends Activity {
 
 	// All static variables
+<<<<<<< HEAD
 	static final String URL = "http://questiontime.jelastic.dogado.eu/rest/students.xml";
+=======
+>>>>>>> 9aab375585b2ee6534d28bc1d8750221a139249e
 	public ArrayList<Student> students;
 	public Student aStudent;
 
@@ -58,6 +66,9 @@ public class LeerlingenTab extends Activity {
 	// static final int MENU_UPDATE = Menu.FIRST;
 	private final int ID_MENU_UPDATE = 1;
 
+/*	private Handler mHandler;
+	private Runnable mRunnable;*/
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -65,13 +76,37 @@ public class LeerlingenTab extends Activity {
 
 		studentListing();
 
+/*		mHandler = new Handler();
+		AutoRefresh();
+*/		
 	}
 
+<<<<<<< HEAD
+=======
+/*	private void AutoRefresh() {
+		mHandler.postDelayed(mRunnable = new Runnable() {
+
+			@Override
+			public void run() {
+				refreshStudentList(); // this is where you put your refresh code
+
+				AutoRefresh();
+
+			}
+		}, 3000);
+	}*/
+
+	public void refreshStudentList(View v) {
+		studentListing();
+	}
+
+>>>>>>> 9aab375585b2ee6534d28bc1d8750221a139249e
 	public void refreshStudentList() {
 		studentListing();
 	}
 
 	public void studentListing() {
+<<<<<<< HEAD
 
 		RestClient.get("students.xml", null, new AsyncHttpResponseHandler() {
 			private ProgressDialog dialog;
@@ -88,6 +123,22 @@ public class LeerlingenTab extends Activity {
 			}
 
 			@Override
+=======
+		RestClient.get("students.xml", null, new AsyncHttpResponseHandler() {
+			private ProgressDialog dialog;
+
+			@Override
+			public void onStart() {
+				dialog = ProgressDialog.show(LeerlingenTab.this, "Loading",
+						"Data loading", true, true, new OnCancelListener() {
+							public void onCancel(DialogInterface dialog) {
+								dialog.dismiss();
+							}
+						});
+			}
+
+			@Override
+>>>>>>> 9aab375585b2ee6534d28bc1d8750221a139249e
 			public void onSuccess(String response) {
 				if (this.dialog.isShowing())
 					this.dialog.dismiss();
@@ -122,10 +173,14 @@ public class LeerlingenTab extends Activity {
 				// file
 				reader.setContentHandler(parser);
 				try {
+<<<<<<< HEAD
 					reader.parse(response);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+=======
+					Xml.parse(response, parser);
+>>>>>>> 9aab375585b2ee6534d28bc1d8750221a139249e
 				} catch (SAXException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -166,7 +221,10 @@ public class LeerlingenTab extends Activity {
 
 				myListView.setOnItemClickListener(new OnItemClickListener() {
 
+<<<<<<< HEAD
 					@Override
+=======
+>>>>>>> 9aab375585b2ee6534d28bc1d8750221a139249e
 					public void onItemClick(AdapterView<?> arg0, View arg1,
 							int arg2, long arg3) {
 						// Student temp = students.get(arg2);
@@ -177,6 +235,10 @@ public class LeerlingenTab extends Activity {
 					}
 				});
 
+<<<<<<< HEAD
+=======
+				System.out.println(response);
+>>>>>>> 9aab375585b2ee6534d28bc1d8750221a139249e
 			}
 		});
 	}
