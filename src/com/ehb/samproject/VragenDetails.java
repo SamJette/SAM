@@ -159,7 +159,6 @@ public class VragenDetails extends Activity implements OnCheckedChangeListener {
 
 	}
 
-	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
 
 		switch (checkedId) {

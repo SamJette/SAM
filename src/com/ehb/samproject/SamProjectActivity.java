@@ -170,7 +170,6 @@ public class SamProjectActivity extends TabActivity {
 
 		helpBuilder.setPositiveButton(R.string._login,
 				new DialogInterface.OnClickListener() {
-					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// Do nothing but close the dialog
 						String inputUserTxt = inputName.getText().toString();
@@ -194,7 +193,6 @@ public class SamProjectActivity extends TabActivity {
 
 		helpBuilder.setNegativeButton(R.string._cancel,
 				new DialogInterface.OnClickListener() {
-					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// Do nothing
 						finish();
@@ -224,7 +222,6 @@ public class SamProjectActivity extends TabActivity {
 			public void onStart() {
 				dialog = ProgressDialog.show(SamProjectActivity.this, "Loading",
 						"Data Loading", true, true, new OnCancelListener() {
-							@Override
 							public void onCancel(DialogInterface dialog) {
 								dialog.dismiss();
 							}

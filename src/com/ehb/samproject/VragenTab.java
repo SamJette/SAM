@@ -158,7 +158,6 @@ public class VragenTab extends Activity implements OnItemClickListener {
 	}
 
 	// click on a row from the listview
-	@Override
 	public void onItemClick(AdapterView<?> arg0, View view, int position,
 			long arg3) {
 
